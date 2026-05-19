@@ -1,7 +1,8 @@
 # UE5_Entity_Stress_Optimizer
 基于 Unreal Engine 5 的海量实体极限性能压测与底层调度系统
 
-> **演示视频**: <img width="1600" height="960" alt="Code_Generated_Image" src="https://github.com/user-attachments/assets/d662eb67-faa7-47b4-bc19-e71a8e31c5fc" />
+> **演示视频**: <img width="1216" height="988" alt="图片" src="https://github.com/user-attachments/assets/2d133c96-b946-402e-957a-06829cff4015" />
+
 https://www.bilibili.com/video/BV1ZGLK6pEVZ/
 
 ## 📌 项目简介

@@ -36,3 +36,5 @@ https://www.bilibili.com/video/BV1ZGLK6pEVZ/
 * `ObjectPoolManager`：内存复用管理系统。
 * `TickSchedulerSubsystem`：实体的动态分级调度器。
 * `BTTask_PrepareCharge`：基于 C++ 与黑板数据的高速冲锋行为树节点。
+
+![Boss冲锋行为树逻辑](images/BT_Boss.jpg)

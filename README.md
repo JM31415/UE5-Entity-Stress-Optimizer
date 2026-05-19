@@ -30,7 +30,7 @@ https://www.bilibili.com/video/BV1ZGLK6pEVZ/
 * **压测基准**: 开启完整碰撞、血量计算与移动逻辑。
 * **优化成果**: 在同屏 400 实体规模下，稳态帧率由 **10 FPS** 跃升至稳定 **45-50 FPS**。
 
-*![实时帧率分析](images/FPS_analyze.jpg)
+*![实时帧率分析](images/FPS_analyze.png)
 
 ## 📁 核心源码展示 (本项目仅展示核心机制逻辑)
 * `ObjectPoolManager`：内存复用管理系统。

@@ -1,0 +1,3 @@
+Name,WaveID,MonsterCount,BaseHP,TickInterval
+Wave1,1,100,100.0,0.033
+Wave2,2,400,100.0,0.033

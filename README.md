@@ -61,7 +61,7 @@
 
 * ## 📁 目录结构 (Project Structure)
 ```text
-Source/tom_looman_learn/
+Source/VampireOptimizer/
  ├── Public/ & Private/
  │    ├── EnemyPoolManager      # 内存级敌人对象池核心管理类
  │    ├── BulletPoolManager     # 射弹资源复用核心管理类

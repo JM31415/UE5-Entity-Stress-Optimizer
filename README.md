@@ -1,45 +1,40 @@
 # UE5 C++ High-Concurrency Entity Stress Optimizer
 **基于 Unreal Engine 5 的海量骨骼蒙皮实体性能优化与调度框架 (v2.0)**
 
-## 📊 Quick Demo View
+##  Quick Demo View
 * **测试场景**：同屏 400 具完整骨骼蒙皮 NPC 极限战斗压测
 * **优化前 (Base Line)**：~8 FPS (伴随明显的主回路延迟)
 * **一键开启优化后 (Optimized)**：45-50 FPS (运行稳定)
 * **性能提升 (Improvement)**：约 **5x - 6x** 帧率提升
 * **单帧逻辑处理延迟**：稳定控制在 **15.6ms** 以内
 * 
-🎥 **压测实录视频**: 
+   **压测实录视频**: 
 [点击观看 Bilibili 压测数据与表现演示](https://www.bilibili.com/video/BV1Jx7K6hEW7/)
 ![Bilibili Video Screenshot](images/bilibili_screenshot.png)
 
-## 📌 项目简介
+##  项目简介
 本项目针对 UE5 海量骨骼蒙皮实体（400+）同屏场景下 Tick 调度压力、碰撞交互开销以及对象频繁创建销毁带来的性能波动问题，设计了一套基于 C++ 的实体调度与性能优化框架。
 项目完成了近战接触、远程射线检测、动画状态流的解耦与性能并网，在受限硬件下实现了帧率与运算延迟的稳定控制。
 
 ---
 
-## 🏗️ 系统架构总图 (UE Gameplay Runtime Pipeline)
+##  系统架构总图 (UE Gameplay Runtime Pipeline)
 
 为了在 400+ 骨骼网格体高密度同屏极限负载下维持主线程（GameThread）的稳态运行，本项目将运行时管线解耦为以下四层架构，实现主线程稳定性优先的实时调度：
 
-┌──────────────────────────────┐
-│        Simulation Layer       │  ← 行为树逻辑 / AI决策 / 局内Buff系统
-├──────────────────────────────┤
-│        Gameplay Layer         │  ← 多态实体基类 / 离散Tick Jitter / 动画解耦断流
-├──────────────────────────────┤
-│        Physics Layer          │  ← 被动空间球形扫描 / 语义碰撞通道 (Overlap裁剪)
-├──────────────────────────────┤
-│        Resource Layer         │  ← AActor级全局对象池 / 全量Reset状态控制 / GC拦截
-└──────────────────────────────┘
+| 架构层级 (Layer) | 核心职责与技术实现 |
+| :--- | :--- |
+| **Simulation Layer** (模拟层) | 行为树逻辑决策 / AI群体调度 / 局内 Buff 状态机 |
+| **Gameplay Layer** (逻辑层) | 多态实体基类 / 离散 Tick Jitter / 动画解耦断流 |
+| **Physics Layer** (物理层) | 被动空间球形扫描 / 语义碰撞通道重构 (Overlap裁剪) |
+| **Resource Layer** (资源层) | AActor级全局对象池 / 全量 Reset 状态控制 / GC拦截 |
 
 *   **Simulation Layer (模拟层)**：控制近/远程派生类的低频行为决策，将战斗行为与底层表现深度解耦，降低决策层开销。
-*   **Gameplay Layer (逻辑层)**：利用 AMyTarget 极简实体作为基类，通过 C++ 运行时引入随机相位步长（Tick Jitter）打散共振，并执行视距外动画断流。
+*   **Gameplay Layer (逻辑层)**：利用 `AMyTarget` 极简实体作为基类，通过 C++ 运行时引入随机相位步长（Tick Jitter）打散共振，并执行视距外动画断流。
 *   **Physics Layer (物理层)**：刚性切断非核心实体的重叠事件回调，回退至玩家发起的被动空间几何扫描，将碰撞查询降为线性平稳。
 *   **Resource Layer (资源层)**：自研 AActor 级 Object Pool 阻断销毁流程，严格重置入池状态，彻底拦截并抹平随机垃圾回收（GC Spike）。
 
----
-
-## 🚀 核心优化策略
+##  核心优化策略
 
 ### 1. 内存防线：全局拦截式对象池 (Object Pool Manager)
 针对高频实体生成与销毁引发的 GC 卡顿，实现 `AActor` 级别的池化复用管理。
@@ -56,7 +51,7 @@
 * **动画状态流控制**：减少 AnimBlueprint 高频状态更新开销。通过 C++ 运行时直接操控骨骼网格体组件 (`PlayAnimation` / `Stop`) 进行按需动画播放，并结合 `SetPlayRate` 配平移动步幅。
 * **业务解耦**：近战判定回退至低开销的几何距离轮询；远程逻辑通过 `GetSocketLocation` 动态抓取枪口骨骼槽位，结合对象池执行无阻塞射击。
 
-## 📊 性能遥测与压测数据 (Benchmark)
+##  性能遥测与压测数据 (Benchmark)
 内嵌轻量级性能探针 (`PerformanceTracker`)，支持 CSV 数据导出与 Unreal Insights 指标对比。
 
 ### 1. 实时吞吐量与帧率动态变化曲线
@@ -72,7 +67,7 @@
 
 ---
 
-## 💻 测试环境 (Hardware Benchmark)
+##  测试环境 (Hardware Benchmark)
 * **硬件环境 (PC)**：
   * **CPU**: Intel(R) Core(TM) i5-14400F (2.50 GHz)
   * **GPU**: NVIDIA GeForce RTX 4060 Ti (8 GB)
@@ -82,7 +77,7 @@
 
 ---
 
-* ## 📁 目录结构 (Project Structure)
+* ##  目录结构 (Project Structure)
 ```text
 Source/VampireOptimizer/
  ├── Public/ & Private/
